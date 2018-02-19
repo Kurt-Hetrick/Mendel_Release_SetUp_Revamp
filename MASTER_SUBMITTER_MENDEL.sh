@@ -41,7 +41,7 @@ VERACODE_CSV="/isilon/sequencing/CIDRSeqSuiteSoftware/resources/Veracode_hg18_hg
 # this is a combined v4 and v4 all merged bait bed files
 MERGED_MENDEL_BED_FILE="/isilon/sequencing/Seq_Proj/M_Valle_MendelianDisorders_SeqWholeExome_120511_GATK_3_3-0/BED_Files/BAITS_Merged_S03723314_S06588914.bed"
 
-QUEUE_LIST=`qstat -f -s r | egrep -v "^[0-9]|^-|^queue" | cut -d @ -f 1 | sort | uniq | egrep -v "bigmem.q|all.q|cgc.q|programmers.q" | datamash collapse 1 | awk '{print "-q",$1}'`
+QUEUE_LIST=`qstat -f -s r | egrep -v "^[0-9]|^-|^queue" | cut -d @ -f 1 | sort | uniq | egrep -v "bigmem.q|all.q|cgc.q|programmers.q|uhoh.q|rhel7.q|lemon.q" | datamash collapse 1 | awk '{print "-q",$1}'`
 
 ############################################################################
 ################# Start of Combine Gvcf Functions ##########################
@@ -588,10 +588,10 @@ SELECT_INDELS_ALL_PASS ()
 {
 	echo \
 	 qsub $QUEUE_LIST \
-	 -N J10H_SELECT_INDEL_FOR_ALL_SAMPLES_PASS_$PROJECT \
+	 -N J10I_SELECT_INDEL_FOR_ALL_SAMPLES_PASS_$PROJECT \
 	 -hold_jid J10_GENERATE_MENDEL_HAPMAP_SAMPLE_LISTS_$PROJECT \
 	 -j y -o $CORE_PATH/$PROJECT/LOGS/$PREFIX'_J10I_SELECT_INDEL_FOR_ALL_SAMPLES_PASS.log' \
-	 $SCRIPT_DIR/J10H_SELECT_ALL_SAMPLES_INDEL_PASS.sh \
+	 $SCRIPT_DIR/J10I_SELECT_ALL_SAMPLES_INDEL_PASS.sh \
 	 $JAVA_1_7 $GATK_DIR $KEY $REF_GENOME \
 	 $CORE_PATH $PROJECT $PREFIX
 }
